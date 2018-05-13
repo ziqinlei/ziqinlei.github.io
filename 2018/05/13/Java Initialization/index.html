@@ -5,18 +5,18 @@
     
     <title>Java 中静态代码块及对象的初始化顺序 | Ziqin Lei&#39;s Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="创建3个类1、MyPrint类，用于打印变量12345public class MyPrint &amp;#123;    public MyPrint(String word) &amp;#123;        System.out.println(word);    &amp;#125;&amp;#125; 2、Parent类1234567891011121314151617public class Parent &amp;#1">
+    <meta name="description" content="第一篇文章，文章内容是 17年1月3日写于CSDN，当时还在学 Java 基础内容。">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 中静态代码块及对象的初始化顺序">
 <meta property="og:url" content="http://yoursite.com/2018/05/13/Java Initialization/index.html">
 <meta property="og:site_name" content="Ziqin Lei&#39;s Home">
-<meta property="og:description" content="创建3个类1、MyPrint类，用于打印变量12345public class MyPrint &amp;#123;    public MyPrint(String word) &amp;#123;        System.out.println(word);    &amp;#125;&amp;#125; 2、Parent类1234567891011121314151617public class Parent &amp;#1">
+<meta property="og:description" content="第一篇文章，文章内容是 17年1月3日写于CSDN，当时还在学 Java 基础内容。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-05-13T12:54:17.227Z">
+<meta property="og:updated_time" content="2018-05-13T13:35:56.011Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 中静态代码块及对象的初始化顺序">
-<meta name="twitter:description" content="创建3个类1、MyPrint类，用于打印变量12345public class MyPrint &amp;#123;    public MyPrint(String word) &amp;#123;        System.out.println(word);    &amp;#125;&amp;#125; 2、Parent类1234567891011121314151617public class Parent &amp;#1">
+<meta name="twitter:description" content="第一篇文章，文章内容是 17年1月3日写于CSDN，当时还在学 Java 基础内容。">
     
 
     
@@ -236,7 +236,8 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p><br></p>
+            <pre><code>第一篇文章，文章内容是 17年1月3日写于CSDN，当时还在学 Java 基础内容。
+</code></pre><a id="more"></a>
 <h2 id="创建3个类"><a href="#创建3个类" class="headerlink" title="创建3个类"></a><strong>创建3个类</strong></h2><p><strong>1、MyPrint类，用于打印变量</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyPrint</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyPrint</span><span class="params">(String word)</span> </span>&#123;</span><br><span class="line">        System.out.println(word);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><strong>2、Parent类</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> MyPrint MP = <span class="keyword">new</span> MyPrint(<span class="string">"Parent's static variable"</span>);<span class="comment">//1</span></span><br><span class="line">    </span><br><span class="line">    MyPrint mp = <span class="keyword">new</span> MyPrint(<span class="string">"Parent's member variable"</span>);<span class="comment">//5</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"Parent's static code block"</span>);<span class="comment">//2</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">"Parent's code block"</span>);<span class="comment">//6</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Parent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Parent's Constructor"</span>);<span class="comment">//7</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><strong>3、Child类</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Child</span> <span class="keyword">extends</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"Child's static code block"</span>);<span class="comment">//3</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">static</span> MyPrint MP = <span class="keyword">new</span> MyPrint(<span class="string">"Child's static variable"</span>);<span class="comment">//4</span></span><br><span class="line">   </span><br><span class="line">    &#123;</span><br><span class="line">        System.out.println(<span class="string">"Child's code block"</span>);<span class="comment">//8</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    MyPrint mp = <span class="keyword">new</span> MyPrint(<span class="string">"Child's member variable"</span>);<span class="comment">//9</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Child</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Child's Constructor"</span>);<span class="comment">//10</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -255,7 +256,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/05/13/Java Initialization/" data-id="cjh4tnt0u0000qwqvejykku99" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://yoursite.com/2018/05/13/Java Initialization/" data-id="cjh4tv8it0000tgqv61cowqdz" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
